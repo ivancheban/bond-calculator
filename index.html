@@ -137,14 +137,14 @@
 
             for (let year = 1; year <= years; year++) {
                 const interest = currentAmount * interestRate;
-                const endAmount = currentAmount + interest + (year > 1 ? additionalAmount : 0);
+                const endAmount = currentAmount + interest + additionalAmount;
                 const isFinanciallyIndependent = interest >= annualExpenses;
 
                 results += `<tr>
                     <td>${year}</td>
                     <td>${formatNumber(currentAmount)}</td>
                     <td>${formatNumber(interest)}</td>
-                    <td>${year > 1 ? formatNumber(additionalAmount) : '-'}</td>
+                    <td>${formatNumber(additionalAmount)}</td>
                     <td>${formatNumber(endAmount)}</td>
                     <td>${isFinanciallyIndependent ? 'Так ✅' : 'Ні ❌'}</td>
                 </tr>`;
