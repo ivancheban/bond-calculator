@@ -12,7 +12,7 @@ This repository contains a web-based calculator for Ukrainian government bonds (
   - Annual additional investment
   - Annual expenses
   - Annual interest rate
-- Responsive design optimized for mobile devices (especially Samsung Galaxy S22) and desktop
+- Responsive design optimized for mobile devices and desktop
 - Results table showing:
   - Year-by-year breakdown of investment growth
   - Interest earned each year
@@ -55,8 +55,8 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## Author
 
-[Your Name or Username]
+Ivan Cheban 2024
 
 ---
 
-We hope this calculator helps you make informed decisions about your ОВДП investments! If you have any questions or suggestions, please open an issue or submit a pull request.
+I hope this calculator helps you make informed decisions about your ОВДП investments! If you have any questions or suggestions, please open an issue or submit a pull request.
