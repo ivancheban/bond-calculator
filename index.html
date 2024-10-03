@@ -78,6 +78,28 @@
             background-color: #f2f2f2;
             white-space: nowrap;
         }
+        .language-switcher {
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+        .language-switcher button {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.25rem 0.5rem;
+            margin-left: 0.5rem;
+            color: #333;
+        }
+        .language-switcher button:hover {
+            background-color: #e0e0e0;
+        }
+        .language-switcher button.active {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #45a049;
+        }
         @media screen and (min-width: 768px) {
             body {
                 display: flex;
@@ -108,6 +130,10 @@
 </script>
 <body>
     <div class="container">
+        <div class="language-switcher">
+            <button onclick="switchLanguage('uk')" class="active">Ukrainian</button>
+            <button onclick="switchLanguage('en')">English</button>
+        </div>
         <h1>Онлайн калькулятор ОВДП 💰</h1>
         <div class="input-group">
             <label for="initialAmount">Початкова сума (грн, USD, EUR) 💵:</label>
@@ -130,6 +156,70 @@
     </div>
 
     <script>
+        const translations = {
+            uk: {
+                title: "Онлайн калькулятор ОВДП 💰",
+                initialAmount: "Початкова сума (грн, USD, EUR) 💵:",
+                additionalAmount: "Щорічна додаткова інвестиція 💵:",
+                annualExpenses: "Річні витрати 💸:",
+                interestRate: "Річна відсоткова ставка (%) 📈:",
+                calculate: "Розрахувати 🧮",
+                year: "Рік",
+                startAmount: "Поч. сума",
+                interest: "Відсотки",
+                addInvest: "Дод. інвест.",
+                endAmount: "Кінц. сума",
+                finIndep: "Фін. незал.",
+                yes: "Так ✅",
+                no: "Ні ❌"
+            },
+            en: {
+                title: "Online Government Bond Calculator 💰",
+                initialAmount: "Initial Amount (UAH, USD, EUR) 💵:",
+                additionalAmount: "Annual Additional Investment 💵:",
+                annualExpenses: "Annual Expenses 💸:",
+                interestRate: "Annual Interest Rate (%) 📈:",
+                calculate: "Calculate 🧮",
+                year: "Year",
+                startAmount: "Start Amount",
+                interest: "Interest",
+                addInvest: "Add. Invest.",
+                endAmount: "End Amount",
+                finIndep: "Fin. Indep.",
+                yes: "Yes ✅",
+                no: "No ❌"
+            }
+        };
+
+        function switchLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.title = translations[lang].title;
+            document.querySelector('h1').textContent = translations[lang].title;
+            document.querySelector('label[for="initialAmount"]').textContent = translations[lang].initialAmount;
+            document.querySelector('label[for="additionalAmount"]').textContent = translations[lang].additionalAmount;
+            document.querySelector('label[for="annualExpenses"]').textContent = translations[lang].annualExpenses;
+            document.querySelector('label[for="interestRate"]').textContent = translations[lang].interestRate;
+            document.querySelector('button[onclick="calculate()"]').textContent = translations[lang].calculate;
+            
+            // Update language switcher buttons
+            document.querySelectorAll('.language-switcher button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.language-switcher button[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+            
+            // Update table headers if table exists
+            const table = document.querySelector('table');
+            if (table) {
+                const headers = table.querySelectorAll('th');
+                headers[0].textContent = translations[lang].year;
+                headers[1].textContent = translations[lang].startAmount;
+                headers[2].textContent = translations[lang].interest;
+                headers[3].textContent = translations[lang].addInvest;
+                headers[4].textContent = translations[lang].endAmount;
+                headers[5].textContent = translations[lang].finIndep;
+            }
+        }
+
         function formatNumber(num) {
             return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
@@ -142,7 +232,8 @@
             const years = 20;
 
             let currentAmount = initialAmount;
-            let results = '<table><tr><th>Рік</th><th>Поч. сума</th><th>Відсотки</th><th>Дод. інвест.</th><th>Кінц. сума</th><th>Фін. незал.</th></tr>';
+            const lang = document.documentElement.lang;
+            let results = `<table><tr><th>${translations[lang].year}</th><th>${translations[lang].startAmount}</th><th>${translations[lang].interest}</th><th>${translations[lang].addInvest}</th><th>${translations[lang].endAmount}</th><th>${translations[lang].finIndep}</th></tr>`;
 
             for (let year = 1; year <= years; year++) {
                 const interest = currentAmount * interestRate;
@@ -155,7 +246,7 @@
                     <td>${formatNumber(interest)}</td>
                     <td>${formatNumber(additionalAmount)}</td>
                     <td>${formatNumber(endAmount)}</td>
-                    <td>${isFinanciallyIndependent ? 'Так ✅' : 'Ні ❌'}</td>
+                    <td>${isFinanciallyIndependent ? translations[lang].yes : translations[lang].no}</td>
                 </tr>`;
 
                 currentAmount = endAmount;
