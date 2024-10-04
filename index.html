@@ -171,7 +171,11 @@
                 endAmount: "Кінц. сума",
                 finIndep: "Фін. незал.",
                 yes: "Так ✅",
-                no: "Ні ❌"
+                no: "Ні ❌",
+                placeholderInitial: "напр., 100,000",
+                placeholderAdditional: "напр., 100,000",
+                placeholderExpenses: "напр., 50,000",
+                placeholderInterest: "напр., 15.00"
             },
             en: {
                 title: "Online Government Bond Calculator 💰",
@@ -187,7 +191,11 @@
                 endAmount: "End Amount",
                 finIndep: "Fin. Indep.",
                 yes: "Yes ✅",
-                no: "No ❌"
+                no: "No ❌",
+                placeholderInitial: "e.g., 100,000",
+                placeholderAdditional: "e.g., 100,000",
+                placeholderExpenses: "e.g., 50,000",
+                placeholderInterest: "e.g., 15.00"
             }
         };
 
@@ -200,6 +208,12 @@
             document.querySelector('label[for="annualExpenses"]').textContent = translations[lang].annualExpenses;
             document.querySelector('label[for="interestRate"]').textContent = translations[lang].interestRate;
             document.querySelector('button[onclick="calculate()"]').textContent = translations[lang].calculate;
+            
+            // Update placeholders
+            document.getElementById('initialAmount').placeholder = translations[lang].placeholderInitial;
+            document.getElementById('additionalAmount').placeholder = translations[lang].placeholderAdditional;
+            document.getElementById('annualExpenses').placeholder = translations[lang].placeholderExpenses;
+            document.getElementById('interestRate').placeholder = translations[lang].placeholderInterest;
             
             // Update language switcher buttons
             document.querySelectorAll('.language-switcher button').forEach(btn => {
